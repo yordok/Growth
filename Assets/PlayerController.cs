@@ -17,10 +17,8 @@ public class PlayerController : MonoBehaviour {
 			moving.x = -1;
 		}
 
-		if (Input.GetKey ("up" || "W")) {
+		if (Input.GetKey ("up" || "W" || "space")) {
 			moving.y = 1;
-		}else if(Input.GetKey("down" || "S")){
-			moving.y = -1;
 		}
 	}
 }
