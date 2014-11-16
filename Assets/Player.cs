@@ -17,11 +17,11 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		var forceX = 0f;
-		var forceY = 0f;
+		float forceX = 0f;
+		float forceY = 0f;
 
-		var absVelX = Mathf.Abs(rigid2D.velocity.x);
-		var absVelY = Mathf.Abs(rigid2D.velocity.y);
+		float absVelX = Mathf.Abs(rigid2D.velocity.x);
+		float absVelY = Mathf.Abs(rigid2D.velocity.y);
 
 		if (absVelX < .2f){
 			standing = true;
