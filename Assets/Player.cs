@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 	public float speed = 10f;
-	public Vector2 maxVelocity = new Vector2(3, 3);
+	public Vector2 maxVelocity = new Vector2(3, 2);
 
 	public bool standing;
 	public float jumpSpeed = 15f;
