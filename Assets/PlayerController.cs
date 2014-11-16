@@ -11,15 +11,15 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		moving.x = moving.y = 0;
-		if (Input.GetKey ("right")) {
+		if (Input.GetKey ("right" || "D")) {
 			moving.x = 1;
-		} else if (Input.GetKey ("left")) {
+		} else if (Input.GetKey ("left" || "A")) {
 			moving.x = -1;
 		}
 
-		if (Input.GetKey ("up")) {
+		if (Input.GetKey ("up" || "W")) {
 			moving.y = 1;
-		}else if(Input.GetKey("down")){
+		}else if(Input.GetKey("down" || "S")){
 			moving.y = -1;
 		}
 	}
