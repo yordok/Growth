@@ -1,3 +1,6 @@
+//attach to player
+//make sure player.cs is also attached
+
 using UnityEngine;
 using System.Collections;
 
