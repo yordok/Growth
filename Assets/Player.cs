@@ -1,3 +1,8 @@
+//Make Player a Rigid 2D
+//attach this file to player
+//attach player controller to player
+//tag the player as 'Player'
+
 using UnityEngine;
 using System.Collections;
 
