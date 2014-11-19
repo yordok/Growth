@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Collectable : MonoBehaviour {
+public class Pickup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +13,14 @@ public class Collectable : MonoBehaviour {
 	
 	}
 
-	void OnTriggerEnter2D(Collider2D target){
-		if (target.gameObject.tag == "Player")
+	// Called when this collides with another 2D collider
+	void OnTriggerEnter2D(Collider2D c)
+	{
+		// If collision is with the player.
+		if (c.tag == "Player") {
+			PlayerController player = c.gameObject.GetComponent<PlayerController>();
+			player.pickups++;
 			Destroy (gameObject);
+		}
 	}
 }
