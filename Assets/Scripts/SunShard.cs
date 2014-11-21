@@ -1,7 +1,6 @@
-using UnityEngine;
-using System.Collections;
+sing System.Collections;
 
-public class Pickup : MonoBehaviour {
+public class SunShard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -16,10 +15,10 @@ public class Pickup : MonoBehaviour {
 	// Called when this collides with another 2D collider
 	void OnTriggerEnter2D(Collider2D c)
 	{
-		// If collision is with the player.
+		// If collision is with the player...
 		if (c.tag == "Player") {
-			PlayerController player = c.gameObject.GetComponent<PlayerController>();
-			player.pickups++;
+			Player player = c.gameObject.GetComponent<Player>();
+			player.sunshards++;
 			Destroy (gameObject);
 		}
 	}
