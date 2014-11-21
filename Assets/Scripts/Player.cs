@@ -8,19 +8,19 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public float jumpForce = 350.0f; // force applied vertically when the player jumps.
-	public float moveForce = 350.0f; // movement speed
+	public float moveForce = 150.0f; // movement speed
 	public float maxSpeed = 5.0f; // maximum movement speed
 	public int sunshards = 0; // number of pickups the player is holding
 	public bool hasDoubleJump = false; // Boolean of weather player can do a double jump
 	private bool facingRight = true; // flagged true if the player is facing right
-	public bool canJump = true; //Test Boolean to try and get the infinite jumps fixed
+	public bool canJump = false; //Test Boolean to try and get the infinite jumps fixed
 	private bool jump; // flagged true if the player will jump next fixed fram
-
+	private float distToGround;
 	public float GroundDistance;
 //	public bool IsGrounded;
 	// Use this for initialization
 	void Start () {
-
+		distToGround = collider.bounds.extents.y;
 	}
 	
 	// Update is called once per frame
@@ -29,17 +29,13 @@ public class Player : MonoBehaviour {
 
 
 		// if the player is grounded and presses the jump button...
-		if (Input.GetButtonDown ("Jump")) {
+		if (Input.GetButtonDown ("Jump") && rigidbody2D.velocity.y==0) {
 			jump = true; // flag them to jump next frame
+			canJump = false;
 		}
 
 	}
-	bool IsGrounded ()
-	{
 
-		return Physics.Raycast (transform.position, - Vector3.up, GroundDistance + 0.1f);
-
-	}
 	// FixedUpdate is called at fixed time intervals
 	void FixedUpdate() {
 
