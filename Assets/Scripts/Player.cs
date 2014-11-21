@@ -1,50 +1,83 @@
 //Make Player a Rigid 2D
+//Make player a box Collider or circle Collider
 //attach this file to player
-//attach player controller to player
 //tag the player as 'Player'
-
 using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	public float speed = 10f;
-	public Vector2 maxVelocity = new Vector2(3, 2);
 
-	public bool standing;
-	public float jumpSpeed = 15f;
-	public float airSpeedMultiplier = .3f;
+	public float jumpForce = 350.0f; // force applied vertically when the player jumps.
+	public float moveForce = 350.0f; // movement speed
+	public float maxSpeed = 5.0f; // maximum movement speed
+	public int sunshards = 0; // number of pickups the player is holding
+	public bool hasDoubleJump = false; // Boolean of weather player can do a double jump
+	private bool facingRight = true; // flagged true if the player is facing right
+	public bool canJump = true; //Test Boolean to try and get the infinite jumps fixed
+	private bool jump; // flagged true if the player will jump next fixed fram
 
-	private PlayerController controller;
+	public float GroundDistance;
+//	public bool IsGrounded;
+	// Use this for initialization
+	void Start () {
 
-	void Start(){
-		controller = GetComponent<PlayerController> ();
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
-		float forceX = 0f;
-		float forceY = 0f;
 
-		float absVelX = Mathf.Abs(rigid2D.velocity.x);
-		float absVelY = Mathf.Abs(rigid2D.velocity.y);
 
-		if (absVelX < .2f){
-			standing = true;
-		}else{
-			standing = false;
+
+		// if the player is grounded and presses the jump button...
+		if (Input.GetButtonDown ("Jump")) {
+			jump = true; // flag them to jump next frame
 		}
 
-		if (controller.moving.x != 0){
-			if (absVelX < maxVelocity.x){
-				forceX = standing ? speed * controller.moving.x : (speed*controller.moving.x * airSpeedMultiplier);
-				transform.localScale = new Vector3(forceX > 0 ? 1: -1, 1, 1);
-			}
-		}
-
-		if (controller.moving.y > 0){
-			if(absVelY < maxVelocity.y)
-				forceY = jumpSpeed * controller.moving.y;
-		}
-		rigidbody2D.AddForce (new Vector2 (forceX, forceY));
 	}
+	bool IsGrounded ()
+	{
+
+		return Physics.Raycast (transform.position, - Vector3.up, GroundDistance + 0.1f);
+
+	}
+	// FixedUpdate is called at fixed time intervals
+	void FixedUpdate() {
+
+		float h = Input.GetAxis ("Horizontal"); // cache horizontal input
+
+			// if player is changing direction or hasn't reached speed cap yet...
+			if (h * rigidbody2D.velocity.x < maxSpeed) {
+					rigidbody2D.AddForce (Vector2.right * h * moveForce); // apply horizontal force
+			}
+
+			// if player's horizontal speed is greater than the speed cap...
+			if (Mathf.Abs (rigidbody2D.velocity.x) > maxSpeed) {
+				// enforce the speed cap
+				rigidbody2D.velocity = new Vector2(Mathf.Sign (rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
+			}
+
+			// check if player is switching directions...
+			if (h > 0 && !facingRight) {
+				Flip ();
+			}
+			else if (h < 0 && facingRight) {
+				Flip ();
+			}
+
+		// if the player is jumping this frame...
+		if (jump) {
+			rigidbody2D.AddForce(Vector2.up * jumpForce); // apply upwards force
+			jump = false; // reset jump flag
+		}
+	}
+
+	// Flip the direction the player is facing
+	void Flip () {
+		facingRight = !facingRight; // flip flag
+
+		Vector3 ls = transform.localScale; // cache current scale
+		ls.x *= -1; // flip horizontally
+		transform.localScale = ls; // maintain scale
+	}
+	
 }
