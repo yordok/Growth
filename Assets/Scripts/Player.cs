@@ -2,7 +2,6 @@
 //Make player a box Collider or circle Collider
 //attach this file to player
 //tag the player as 'Player'
-using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -15,12 +14,12 @@ public class Player : MonoBehaviour {
 	private bool facingRight = true; // flagged true if the player is facing right
 	public bool canJump = false; //Test Boolean to try and get the infinite jumps fixed
 	private bool jump; // flagged true if the player will jump next fixed fram
-	private float distToGround;
+//	private float distToGround;
 	public float GroundDistance;
 //	public bool IsGrounded;
 	// Use this for initialization
 	void Start () {
-		distToGround = collider.bounds.extents.y;
+		//distToGround = collider.bounds.extents.y;
 	}
 	
 	// Update is called once per frame
@@ -31,8 +30,14 @@ public class Player : MonoBehaviour {
 		// if the player is grounded and presses the jump button...
 		if (Input.GetButtonDown ("Jump") && rigidbody2D.velocity.y==0) {
 			jump = true; // flag them to jump next frame
-			canJump = false;
+			//canJump = false;
 		}
+		if (Input.GetButtonDown ("Jump") && hasDoubleJump && rigidbody2D.velocity.y != 0) {
+			jump = true; // flag them to jump next frame
+			hasDoubleJump = false;
+		}
+
+
 
 	}
 
